@@ -1,0 +1,37 @@
+﻿@page
+@using System.Reflection.Metadata
+@using Google.Protobuf.Reflection
+@using Microsoft.Extensions.Options
+@using TestingWebApp.Repositories
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<ul>
+    <form method="post">
+        <input type="text" name="description">
+        <button type="submit">Maak Todo</button>
+    </form>
+    <br/>
+    @{
+        Model.TodosList = Model.Todos.ToList();
+        for (int i = 0; i < Model.TodosList.Count(); i++)
+        {
+            Todo todo = Model.TodosList[i];
+            <li>
+                <form method="post">
+                        <input type="checkbox" name="completed" checked="@todo.Completed"/>
+                        <input type="text" name="description" value="@todo.Description"/>
+                        <button type="submit"
+                                asp-route-todoId="@todo.TodoId"
+                                asp-page-handler="update">Update</button>
+                        <button type="submit"
+                                asp-route-todoId="@todo.TodoId"
+                                asp-page-handler="delete">Delete</button>
+                </form> 
+            </li>         
+            <br/>
+        }
+    }
+</ul>

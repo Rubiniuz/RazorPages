@@ -1,0 +1,29 @@
+﻿@page
+@model TestingWebApp.Pages.Counting
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+<head>
+    <title></title>
+</head>
+<body>
+<div>
+    <h2>Counter: @Model.Count</h2>
+    <form method="post" asp-page-handler="Increment">
+        <input type="hidden" name="count" value="@Model.Count" >
+        <button type="submit">+</button>
+    </form>
+    
+    <form method="post" asp-page-handler="Decrement">
+        <input type="hidden" name="count" value="@Model.Count" >
+        <button type="submit">-</button>
+    </form>
+    
+</div>
+</body>
+</html>
