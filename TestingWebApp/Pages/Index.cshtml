@@ -10,9 +10,18 @@
 
 <ul>
     <form method="post">
-        <input type="text" name="description">
+        <input asp-for="TodoToAdd.Description"/>
         <button type="submit">Maak Todo</button>
     </form>
+    <form method="post">
+        <input type="text" name="description" maxlength="20">
+        <button type="submit" asp-page-handler="create">Maak Todo</button>
+    </form>
+    <form method="post">
+        <input asp-for="TodoToAdd.Description"/>
+        <button type="submit" asp-page-handler="createCorrect">Maak Todo</button>
+    </form>
+    
     <br/>
     @{
         Model.TodosList = Model.Todos.ToList();
@@ -22,7 +31,7 @@
             <li>
                 <form method="post">
                         <input type="checkbox" name="completed" checked="@todo.Completed"/>
-                        <input type="text" name="description" value="@todo.Description"/>
+                        <input type="text" name="description" maxlength="20" value="@todo.Description"/>
                         <button type="submit"
                                 asp-route-todoId="@todo.TodoId"
                                 asp-page-handler="update">Update</button>

@@ -39,16 +39,50 @@ public class IndexModel : PageModel
 
     /*public void OnPost()
     {
-        var description = Request.Form["description"];
-        
-        
-    }*/
-
-    public void OnPost()
-    {
         string description = Request.Form["description"];
         string completed = Request.Form["completed"];
         new TodoRepository().Create(new Todo() { Description = description, Completed = false });
+    }*/
+
+    [BindProperty] 
+    public Todo TodoToAdd { get; set; }
+    
+    public IActionResult OnPost()
+    {
+        //Ohkay but messy
+        if(!ModelState.IsValid)
+        {
+            return Page();
+        }
+        
+        new TodoRepository().Create(TodoToAdd);
+        
+        return Page();
+    }
+    public IActionResult OnPostCreate(string description)
+    {
+        //Wrong!
+        if(!ModelState.IsValid)
+        {
+            if(description != "" && description != null)
+            {
+                new TodoRepository().Create(new Todo() { Description = description, Completed = false });
+            }
+        }
+        return Page();
+    }
+    
+    public IActionResult OnPostCreateCorrect()
+    {
+        //Correct
+        if(!ModelState.IsValid)
+        {
+            return Page();
+        }
+        
+        new TodoRepository().Create(TodoToAdd);
+        
+        return Page();
     }
 
     public void OnPostDelete(int todoId)
